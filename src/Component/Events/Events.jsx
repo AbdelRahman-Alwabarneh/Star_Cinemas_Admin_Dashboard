@@ -29,6 +29,7 @@ function Events() {
     vipTicketName: "",
     vipTicketNumberOfTickets: "",
     vipTicketPrice: "",
+    location: "",
   });
 
   const [movies, setMovies] = useState([]);
@@ -80,6 +81,7 @@ function Events() {
           vipTicketName: event.vipTicketName,
           vipTicketNumberOfTickets: event.vipTicketNumberOfTickets,
           vipTicketPrice: event.vipTicketPrice,
+          location: event.location,
           delete: false,
           id: nextIndex + 1,
         }
@@ -105,6 +107,7 @@ function Events() {
         vipTicketName: "",
         vipTicketNumberOfTickets: "",
         vipTicketPrice: "",
+        location: "",
       });
     } catch (error) {
       console.error("Error adding event:", error);
@@ -132,6 +135,7 @@ function Events() {
         vipTicketName: event.vipTicketName,
         vipTicketNumberOfTickets: event.vipTicketNumberOfTickets,
         vipTicketPrice: event.vipTicketPrice,
+        location: event.location,
         delete: false,
         id: id,
       }
@@ -152,6 +156,7 @@ function Events() {
       vipTicketName: "",
       vipTicketNumberOfTickets: "",
       vipTicketPrice: "",
+      location: "",
     });
   }
 
@@ -456,6 +461,27 @@ function Events() {
               </label>
             </div>
 
+
+            {/* Location */}
+            <div className="relative z-0 w-full group">
+              <input
+                type="text"
+                id="location"
+                name="location"
+                value={event.location}
+                onChange={handleChange}
+                required
+                className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-white appearance-none focus:outline-none focus:ring-0 focus:border-white peer"
+                placeholder=" "
+              />
+              <label
+                htmlFor="location"
+                className="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#f4e1ff] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >
+                Location
+              </label>
+            </div>
+
             {/* Image */}
             <div className="relative z-0 w-full group">
               <input
@@ -512,6 +538,7 @@ function Events() {
               <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">VIP Name</th>
               <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">VIP Tickets</th>
               <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">VIP Price</th>
+              <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">Location</th>
               <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
@@ -534,6 +561,7 @@ function Events() {
                 <td className="px-1 py-1 text-xs">{movie.vipTicketName}</td>
                 <td className="px-1 py-1 text-xs">{movie.vipTicketNumberOfTickets}</td>
                 <td className="px-1 py-1 text-xs">{movie.vipTicketPrice}</td>
+                <td className="px-1 py-1 text-xs">{movie.location}</td>
                 <td className="px-1 py-1 text-xs flex space-x-1">
                 <button
   onClick={() => EditEvent(movie.id)}
