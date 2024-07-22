@@ -5,14 +5,14 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 function Orders() {
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
-    useEffect(() => {
-      const isSuccess = sessionStorage.getItem("issuccess");
-      if (isSuccess === "false" || isSuccess === null) {
-        navigate("/login");
-      }
-    }, [navigate]);
+    // useEffect(() => {
+    //   const isSuccess = sessionStorage.getItem("issuccess");
+    //   if (isSuccess === "false" || isSuccess === null) {
+    //     navigate("/login");
+    //   }
+    // }, [navigate]);
 
   const [AllOrders, setAllOrders] = useState([]);
 

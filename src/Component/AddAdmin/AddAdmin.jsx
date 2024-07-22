@@ -5,14 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 function AddAdmin() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  useEffect(() => {
-    const isSuccess = sessionStorage.getItem("issuccess");
-    if (isSuccess === "false" || isSuccess === null) {
-      navigate("/login");
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   const isSuccess = sessionStorage.getItem("issuccess");
+  //   if (isSuccess === "false" || isSuccess === null) {
+  //     navigate("/login");
+  //   }
+  // }, [navigate]);
 
   const [AddNewAdmin, setAddNewAdmin] = useState({
     Admin_Name: "",

@@ -5,14 +5,14 @@ import Footer from "../Footer/Footer";
 import { useNavigate } from "react-router-dom";
 
 function Contacts() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  useEffect(() => {
-    const isSuccess = sessionStorage.getItem("issuccess");
-    if (isSuccess === "false" || isSuccess === null) {
-      navigate("/login");
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   const isSuccess = sessionStorage.getItem("issuccess");
+  //   if (isSuccess === "false" || isSuccess === null) {
+  //     navigate("/login");
+  //   }
+  // }, [navigate]);
 
   const [contacts, setContacts] = useState([]);
 
