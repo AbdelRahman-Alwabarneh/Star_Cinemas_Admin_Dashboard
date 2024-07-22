@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import axios from "axios";
 function LogIn() {
-  sessionStorage.setItem("issuccess", false);
+  sessionStorage.setItem("issuccess", true);
   const [AdminLogIn, setAdminLogIn] = useState({
     Admin_Email: "",
     Admin_Password: "",
