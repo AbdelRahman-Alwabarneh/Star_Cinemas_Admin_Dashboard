@@ -87,7 +87,7 @@ function AddAdmin() {
             className="flex justify-center items-center space-x-3 rtl:space-x-reverse mb-10"
           >
             <img
-              src="https://flowbite.com/docs/images/logo.svg"
+              src="https://cdn.discordapp.com/attachments/993570904544124972/1264878060965199912/images-removebg-preview.png?ex=669f78fe&is=669e277e&hm=8846c3f1aa8d2f26b41b860850706153f18b493c144198c0d980773287a4aa86&"
               className="h-8"
               alt="Flowbite Logo"
             />
