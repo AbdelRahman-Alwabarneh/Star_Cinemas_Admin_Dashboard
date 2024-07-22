@@ -2,14 +2,14 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 function Error404() {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
-    // useEffect(() => {
-    //   const isSuccess = sessionStorage.getItem("issuccess");
-    //   if (isSuccess === "false" || isSuccess === null) {
-    //     navigate("/login");
-    //   }
-    // }, [navigate]);
+    useEffect(() => {
+      const isSuccess = sessionStorage.getItem("issuccess");
+      if (isSuccess === "false" || isSuccess === null) {
+        navigate("/login");
+      }
+    }, [navigate]);
   return (
     <>
     <title>Star Cinemas - Error404 Admin</title>

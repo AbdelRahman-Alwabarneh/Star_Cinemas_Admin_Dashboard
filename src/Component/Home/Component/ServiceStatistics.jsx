@@ -74,7 +74,7 @@ function ServiceStatistics() {
   }, []);
   return (
     <>
-      <div className="bg-[#270f3b] w-full dark:bg-gray-700 ">
+      <div className="bg-[#270f3b] w-full dark:bg-gray-700 pt-[100px] ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:py-24 lg:px-8">
           <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl dark:text-white">
             Our service statistics

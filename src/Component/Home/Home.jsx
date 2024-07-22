@@ -6,14 +6,14 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const isSuccess = sessionStorage.getItem("issuccess");
-  //   if (isSuccess === "false" || isSuccess === null) {
-  //     navigate("/login");
-  //   }
-  // }, [navigate]);
+  useEffect(() => {
+    const isSuccess = sessionStorage.getItem("issuccess");
+    if (isSuccess === "false" || isSuccess === null) {
+      navigate("/login");
+    }
+  }, [navigate]);
   return (
     <>
     <title>Star Cinemas - Home Admin</title>

@@ -3,14 +3,14 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function Customers() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const isSuccess = sessionStorage.getItem("issuccess");
-  //   if (isSuccess === "false" || isSuccess === null) {
-  //     navigate("/login");
-  //   }
-  // }, [navigate]);
+  useEffect(() => {
+    const isSuccess = sessionStorage.getItem("issuccess");
+    if (isSuccess === "false" || isSuccess === null) {
+      navigate("/login");
+    }
+  }, [navigate]);
 
   const [Registered, setRegistered] = useState([]);
 

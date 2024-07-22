@@ -5,14 +5,14 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function Events() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const isSuccess = sessionStorage.getItem("issuccess");
-  //   if (isSuccess === "false" || isSuccess === null) {
-  //     navigate("/login");
-  //   }
-  // }, [navigate]);
+  useEffect(() => {
+    const isSuccess = sessionStorage.getItem("issuccess");
+    if (isSuccess === "false" || isSuccess === null) {
+      navigate("/login");
+    }
+  }, [navigate]);
 
   const [event, setEvent] = useState({
     author: "",
@@ -189,7 +189,7 @@ function Events() {
 
   return (
     <>
-        <title>Star Cinemas - Events Admin</title>
+      <title>Star Cinemas - Events Admin</title>
       <div className="bg-[#351251]">
         <Header />
         <div className="bg-[#351251] h-auto pt-20 mp-20">
@@ -461,7 +461,6 @@ function Events() {
               </label>
             </div>
 
-
             {/* Location */}
             <div className="relative z-0 w-full group">
               <input
@@ -514,89 +513,142 @@ function Events() {
 
         {/* Display new event card immediately */}
         <div>
-  <hr className="mt-[50px] h-[5px] bg-white" />
-  <h2 className="mt-[20px] text-center text-2xl font-bold text-white">
-    All Events
-  </h2>
-  {movies.length > 0 && (
-    <div className="pt-[20px] px-2 py-5">
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200 table-auto">
-          <thead className="bg-[#452B6F] text-white">
-            <tr>
-              <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">Image</th>
-              <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">Title</th>
-              <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">Description</th>
-              <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">Author</th>
-              <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">Rating</th>
-              <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">Release Year</th>
-              <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">Tickets</th>
-              <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">Coupon Code</th>
-              <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">Discount</th>
-              <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">Price</th>
-              <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">VIP Coupon</th>
-              <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">VIP Name</th>
-              <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">VIP Tickets</th>
-              <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">VIP Price</th>
-              <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">Location</th>
-              <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="bg-[#5E3A96] text-white divide-y divide-gray-200">
-            {movies.map((movie) => (
-              <tr key={movie.id}>
-                <td className="px-1 py-1">
-                  <img src={movie.image} alt={movie.title} className="w-10 h-10 object-cover" />
-                </td>
-                <td className="px-1 py-1 text-xs">{movie.title}</td>
-                <td className="px-1 py-1 text-xs">{movie.description}</td>
-                <td className="px-1 py-1 text-xs">{movie.author}</td>
-                <td className="px-1 py-1 text-xs">{movie.rating}</td>
-                <td className="px-1 py-1 text-xs">{movie.release_year}</td>
-                <td className="px-1 py-1 text-xs">{movie.numberOfTickets}</td>
-                <td className="px-1 py-1 text-xs">{movie.couponCode}</td>
-                <td className="px-1 py-1 text-xs">{movie.discountPercentage}</td>
-                <td className="px-1 py-1 text-xs">{movie.price}</td>
-                <td className="px-1 py-1 text-xs">{movie.vipTicketCouponCode}</td>
-                <td className="px-1 py-1 text-xs">{movie.vipTicketName}</td>
-                <td className="px-1 py-1 text-xs">{movie.vipTicketNumberOfTickets}</td>
-                <td className="px-1 py-1 text-xs">{movie.vipTicketPrice}</td>
-                <td className="px-1 py-1 text-xs">{movie.location}</td>
-                <td className="px-1 py-1 text-xs flex space-x-1">
-                <button
-  onClick={() => EditEvent(movie.id)}
-  type="button"
-  className="bg-[#3a9228] text-white px-4 py-2 rounded hover:bg-[#35a035] transition duration-300 focus:outline-none focus:ring-2 focus:ring-opacity-50"
->
-  Edit
-</button>
-                  {movie.delete ? (
-                 <button
-                 onClick={() => ReturnEvent(movie.id)}
-                 type="button"
-                 className="bg-[#983ce3] text-white px-4 py-2 rounded hover:bg-[#a12fff] transition duration-300 focus:outline-none focus:ring-2  focus:ring-opacity-50"
-               >
-                 Retrieve
-               </button>
-                  ) : (
-                    <button
-                    onClick={() => DeleteEvent(movie.id)}
-                    type="button"
-                    className="bg-[#c53131] text-white px-4 py-2 rounded hover:bg-[#ff3131] transition duration-300 focus:outline-none focus:ring-2 focus:ring-opacity-50"
-                  >
-                    Delete
-                  </button>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  )}
-</div>
-
+          <hr className="mt-[50px] h-[5px] bg-white" />
+          <h2 className="mt-[20px] text-center text-2xl font-bold text-white">
+            All Events
+          </h2>
+          {movies.length > 0 && (
+            <div className="pt-[20px] px-2 py-5">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200 table-auto">
+                  <thead className="bg-[#452B6F] text-white">
+                    <tr>
+                      <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">
+                        Image
+                      </th>
+                      <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">
+                        Title
+                      </th>
+                      <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">
+                        Description
+                      </th>
+                      <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">
+                        Author
+                      </th>
+                      <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">
+                        Rating
+                      </th>
+                      <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">
+                        Release Year
+                      </th>
+                      <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">
+                        Tickets
+                      </th>
+                      <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">
+                        Coupon Code
+                      </th>
+                      <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">
+                        Discount
+                      </th>
+                      <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">
+                        Price
+                      </th>
+                      <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">
+                        VIP Coupon
+                      </th>
+                      <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">
+                        VIP Name
+                      </th>
+                      <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">
+                        VIP Tickets
+                      </th>
+                      <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">
+                        VIP Price
+                      </th>
+                      <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">
+                        Location
+                      </th>
+                      <th className="px-1 py-1 text-left text-xs font-medium uppercase tracking-wider">
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-[#5E3A96] text-white divide-y divide-gray-200">
+                    {movies.map((movie) => (
+                      <tr key={movie.id}>
+                        <td className="px-1 py-1">
+                          <img
+                            src={movie.image}
+                            alt={movie.title}
+                            className="w-10 h-10 object-cover"
+                          />
+                        </td>
+                        <td className="px-1 py-1 text-xs">{movie.title}</td>
+                        <td className="px-1 py-1 text-xs">
+                          {movie.description}
+                        </td>
+                        <td className="px-1 py-1 text-xs">{movie.author}</td>
+                        <td className="px-1 py-1 text-xs">{movie.rating}</td>
+                        <td className="px-1 py-1 text-xs">
+                          {movie.release_year}
+                        </td>
+                        <td className="px-1 py-1 text-xs">
+                          {movie.numberOfTickets}
+                        </td>
+                        <td className="px-1 py-1 text-xs">
+                          {movie.couponCode}
+                        </td>
+                        <td className="px-1 py-1 text-xs">
+                          {movie.discountPercentage}
+                        </td>
+                        <td className="px-1 py-1 text-xs">{movie.price}</td>
+                        <td className="px-1 py-1 text-xs">
+                          {movie.vipTicketCouponCode}
+                        </td>
+                        <td className="px-1 py-1 text-xs">
+                          {movie.vipTicketName}
+                        </td>
+                        <td className="px-1 py-1 text-xs">
+                          {movie.vipTicketNumberOfTickets}
+                        </td>
+                        <td className="px-1 py-1 text-xs">
+                          {movie.vipTicketPrice}
+                        </td>
+                        <td className="px-1 py-1 text-xs">{movie.location}</td>
+                        <td className="px-1 py-1 text-xs flex space-x-1">
+                          <button
+                            onClick={() => EditEvent(movie.id)}
+                            type="button"
+                            className="bg-[#3a9228] text-white px-4 py-2 rounded hover:bg-[#35a035] transition duration-300 focus:outline-none focus:ring-2 focus:ring-opacity-50"
+                          >
+                            Edit
+                          </button>
+                          {movie.delete ? (
+                            <button
+                              onClick={() => ReturnEvent(movie.id)}
+                              type="button"
+                              className="bg-[#983ce3] text-white px-4 py-2 rounded hover:bg-[#a12fff] transition duration-300 focus:outline-none focus:ring-2  focus:ring-opacity-50"
+                            >
+                              Retrieve
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => DeleteEvent(movie.id)}
+                              type="button"
+                              className="bg-[#c53131] text-white px-4 py-2 rounded hover:bg-[#ff3131] transition duration-300 focus:outline-none focus:ring-2 focus:ring-opacity-50"
+                            >
+                              Delete
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+        </div>
 
         <Footer />
       </div>
