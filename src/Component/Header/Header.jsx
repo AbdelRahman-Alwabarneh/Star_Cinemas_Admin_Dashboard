@@ -79,6 +79,14 @@ function Header() {
               </li>
               <li>
                 <Link
+                  to="/orders"
+                  className="block py-2 px-3 text-white rounded hover:bg-[#1D4ED8] min-[870px]:hover:bg-transparent min-[870px]:border-0 min-[870px]:hover:text-[#c038ff] min-[870px]:p-0 dark:text-white min-[870px]:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white min-[870px]:dark:hover:bg-transparent"
+                >
+                  Orders
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/contacts"
                   className="block py-2 px-3 text-white rounded hover:bg-[#1D4ED8] min-[870px]:hover:bg-transparent min-[870px]:border-0 min-[870px]:hover:text-[#c038ff] min-[870px]:p-0 dark:text-white min-[870px]:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white min-[870px]:dark:hover:bg-transparent"
                 >

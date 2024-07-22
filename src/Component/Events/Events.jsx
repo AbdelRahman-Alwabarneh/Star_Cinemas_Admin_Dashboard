@@ -5,14 +5,14 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function Events() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  useEffect(() => {
-    const isSuccess = sessionStorage.getItem("issuccess");
-    if (isSuccess === "false" || isSuccess === null) {
-      navigate("/login");
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   const isSuccess = sessionStorage.getItem("issuccess");
+  //   if (isSuccess === "false" || isSuccess === null) {
+  //     navigate("/login");
+  //   }
+  // }, [navigate]);
 
   const [event, setEvent] = useState({
     author: "",
