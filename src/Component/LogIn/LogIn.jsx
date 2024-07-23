@@ -17,7 +17,7 @@ function LogIn() {
   async function handleAdminLogIn() {
     try {
       const response = await axios.get(
-        "https://test-74298-default-rtdb.firebaseio.com/AdminAccount.json"
+        "https://cinema-website-b44c3-default-rtdb.europe-west1.firebasedatabase.app/AdminAccount.json"
       );
       const adminAccounts = response.data || {};
 

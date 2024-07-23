@@ -59,6 +59,7 @@ function Events() {
     const { name, value } = e.target;
     setEvent({ ...event, [name]: value });
   };
+  const [AddEventDone, setAddEventDone] = useState("");
 
   const addEvent = async () => {
     try {
@@ -86,7 +87,11 @@ function Events() {
           id: nextIndex + 1,
         }
       );
-      console.log("Event added successfully");
+      setAddEventDone("Add Event successfully");
+      console.log("Dsdads");
+      setTimeout(() => {
+        setAddEventDone("");
+      }, 4000);
 
       //لتحديث الكاردات بدون رفرش
       fetchMovies();
@@ -113,12 +118,25 @@ function Events() {
       console.error("Error adding event:", error);
     }
   };
+  const [isOpen, setIsOpen] = useState(false);
 
-  async function EditEvent(id) {
+  const openModal = (id) => {
+    setEditid(id);
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+  const [EditEventDone, setEditEventDone] = useState("");
+
+  const [Editid, setEditid] = useState(0);
+  async function EditEvent() {
     const nextIndex = movies.length;
+
     await axios.put(
       `https://cinema-website-b44c3-default-rtdb.europe-west1.firebasedatabase.app/movies/${
-        id - 1
+        Editid - 1
       }.json`,
       {
         author: event.author,
@@ -137,9 +155,14 @@ function Events() {
         vipTicketPrice: event.vipTicketPrice,
         location: event.location,
         delete: false,
-        id: id,
+        id: Editid,
       }
     );
+    setEditEventDone("Edit Event successfully");
+    console.log("Dsdads");
+    setTimeout(() => {
+      setEditEventDone("");
+    }, 4000);
     fetchMovies();
     setEvent({
       author: "",
@@ -159,6 +182,7 @@ function Events() {
       location: "",
     });
   }
+  const [DeleteEventDone, setDeleteEventDone] = useState("");
 
   async function DeleteEvent(id) {
     try {
@@ -168,11 +192,18 @@ function Events() {
         }.json`,
         { delete: true }
       );
+      setDeleteEventDone("Delete Event successfully");
+      console.log("Dsdads");
+      setTimeout(() => {
+        setDeleteEventDone("");
+      }, 4000);
     } catch (error) {
       console.error("Error deleting DeleteEvent: ", error);
     }
     fetchMovies();
   }
+  const [RetrieveEventDone, setRetrieveEventDone] = useState("");
+
   async function ReturnEvent(id) {
     try {
       await axios.patch(
@@ -181,6 +212,10 @@ function Events() {
         }.json`,
         { delete: false }
       );
+      setRetrieveEventDone("Retrieve Event successfully");
+      setTimeout(() => {
+        setRetrieveEventDone("");
+      }, 2000);
     } catch (error) {
       console.error("Error deleting DeleteEvent: ", error);
     }
@@ -192,6 +227,7 @@ function Events() {
       <title>Star Cinemas - Events Admin</title>
       <div className="bg-[#351251]">
         <Header />
+
         <div className="bg-[#351251] h-auto pt-20 mp-20">
           <form
             onSubmit={(e) => {
@@ -223,7 +259,21 @@ function Events() {
                 Title
               </label>
             </div>
-
+            {AddEventDone && (
+              <div className="mt-[80px] fixed top-4 right-4 bg-green-500 text-white p-4 rounded-lg shadow-lg">
+                {AddEventDone}
+              </div>
+            )}
+            {DeleteEventDone && (
+              <div className="mt-[80px] fixed top-4 right-4 bg-red-600 text-white p-4 rounded-lg shadow-lg">
+                {DeleteEventDone}
+              </div>
+            )}
+            {RetrieveEventDone && (
+              <div className="mt-[80px] fixed top-4 right-4 bg-green-500 text-white p-4 rounded-lg shadow-lg">
+                {RetrieveEventDone}
+              </div>
+            )}
             {/* Description */}
             <div className="relative z-0 w-full group">
               <input
@@ -510,7 +560,6 @@ function Events() {
             </button>
           </form>
         </div>
-
         {/* Display new event card immediately */}
         <div>
           <hr className="mt-[50px] h-[5px] bg-white" />
@@ -617,12 +666,341 @@ function Events() {
                         <td className="px-1 py-1 text-xs">{movie.location}</td>
                         <td className="px-1 py-1 text-xs flex space-x-1">
                           <button
-                            onClick={() => EditEvent(movie.id)}
+                            onClick={() => openModal(movie.id)}
                             type="button"
                             className="bg-[#3a9228] text-white px-4 py-2 rounded hover:bg-[#35a035] transition duration-300 focus:outline-none focus:ring-2 focus:ring-opacity-50"
                           >
                             Edit
                           </button>
+
+                          {/*  */}
+                          {isOpen && (
+                            <div className="fixed inset-0 flex items-center justify-center z-50">
+                              <div
+                                className="absolute inset-0 bg-black opacity-50"
+                                onClick={closeModal}
+                              ></div>
+
+                              <div className="relative max-w-4xl mx-auto font-bold text-white bg-[#6f0e99] p-8 rounded-md shadow-md">
+                                {EditEventDone && (
+                                  <div className=" fixed top-4 right-4 bg-green-500 text-white p-4 rounded-lg shadow-lg">
+                                    {EditEventDone}
+                                  </div>
+                                )}
+                                <form
+                                  onSubmit={(e) => {
+                                    e.preventDefault();
+                                  }}
+                                  className="grid grid-cols-1 gap-6 sm:grid-cols-2"
+                                >
+                                  <h1 className="col-span-2 text-center text-[30px] font-bold text-[#ffffff] mb-6">
+                                    Add Events
+                                  </h1>
+
+                                  {/* Title */}
+                                  <div className="relative z-0 w-full group">
+                                    <input
+                                      type="text"
+                                      id="title"
+                                      name="title"
+                                      value={event.title}
+                                      onChange={handleChange}
+                                      className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-white appearance-none focus:outline-none focus:ring-0 focus:border-white peer"
+                                      placeholder=" "
+                                    />
+                                    <label
+                                      htmlFor="title"
+                                      className="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#f4e1ff] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                    >
+                                      Title
+                                    </label>
+                                  </div>
+
+                                  {/* Description */}
+                                  <div className="relative z-0 w-full group">
+                                    <input
+                                      type="text"
+                                      id="description"
+                                      name="description"
+                                      value={event.description}
+                                      onChange={handleChange}
+                                      className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-white appearance-none focus:outline-none focus:ring-0 focus:border-white peer"
+                                      placeholder=" "
+                                    />
+                                    <label
+                                      htmlFor="description"
+                                      className="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#f4e1ff] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                    >
+                                      Description
+                                    </label>
+                                  </div>
+
+                                  {/* Author */}
+                                  <div className="relative z-0 w-full group">
+                                    <input
+                                      type="text"
+                                      id="author"
+                                      name="author"
+                                      value={event.author}
+                                      onChange={handleChange}
+                                      className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-white appearance-none focus:outline-none focus:ring-0 focus:border-white peer"
+                                      placeholder=" "
+                                    />
+                                    <label
+                                      htmlFor="author"
+                                      className="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#f4e1ff] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                    >
+                                      Author
+                                    </label>
+                                  </div>
+
+                                  {/* Rating */}
+                                  <div className="relative z-0 w-full group">
+                                    <input
+                                      type="text"
+                                      id="rating"
+                                      name="rating"
+                                      value={event.rating}
+                                      onChange={handleChange}
+                                      className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-white appearance-none focus:outline-none focus:ring-0 focus:border-white peer"
+                                      placeholder=" "
+                                    />
+                                    <label
+                                      htmlFor="rating"
+                                      className="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#f4e1ff] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                    >
+                                      Rating
+                                    </label>
+                                  </div>
+
+                                  {/* Release Year */}
+                                  <div className="relative z-0 w-full group">
+                                    <input
+                                      type="text"
+                                      id="release_year"
+                                      name="release_year"
+                                      value={event.release_year}
+                                      onChange={handleChange}
+                                      className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-white appearance-none focus:outline-none focus:ring-0 focus:border-white peer"
+                                      placeholder=" "
+                                    />
+                                    <label
+                                      htmlFor="release_year"
+                                      className="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#f4e1ff] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                    >
+                                      Release Year
+                                    </label>
+                                  </div>
+
+                                  {/* Number of Tickets */}
+                                  <div className="relative z-0 w-full group">
+                                    <input
+                                      type="text"
+                                      id="numberOfTickets"
+                                      name="numberOfTickets"
+                                      value={event.numberOfTickets}
+                                      onChange={handleChange}
+                                      className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-white appearance-none focus:outline-none focus:ring-0 focus:border-white peer"
+                                      placeholder=" "
+                                    />
+                                    <label
+                                      htmlFor="numberOfTickets"
+                                      className="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#f4e1ff] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                    >
+                                      Number of Tickets
+                                    </label>
+                                  </div>
+
+                                  {/* Coupon Code */}
+                                  <div className="relative z-0 w-full group">
+                                    <input
+                                      type="text"
+                                      id="couponCode"
+                                      name="couponCode"
+                                      value={event.couponCode}
+                                      onChange={handleChange}
+                                      className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-white appearance-none focus:outline-none focus:ring-0 focus:border-white peer"
+                                      placeholder=" "
+                                    />
+                                    <label
+                                      htmlFor="couponCode"
+                                      className="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#f4e1ff] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                    >
+                                      Coupon Code
+                                    </label>
+                                  </div>
+
+                                  {/* Discount Percentage */}
+                                  <div className="relative z-0 w-full group">
+                                    <input
+                                      type="text"
+                                      id="discountPercentage"
+                                      name="discountPercentage"
+                                      value={event.discountPercentage}
+                                      onChange={handleChange}
+                                      className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-white appearance-none focus:outline-none focus:ring-0 focus:border-white peer"
+                                      placeholder=" "
+                                    />
+                                    <label
+                                      htmlFor="discountPercentage"
+                                      className="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#f4e1ff] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                    >
+                                      Discount Percentage
+                                    </label>
+                                  </div>
+
+                                  {/* Price */}
+                                  <div className="relative z-0 w-full group">
+                                    <input
+                                      type="text"
+                                      id="price"
+                                      name="price"
+                                      value={event.price}
+                                      onChange={handleChange}
+                                      className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-white appearance-none focus:outline-none focus:ring-0 focus:border-white peer"
+                                      placeholder=" "
+                                    />
+                                    <label
+                                      htmlFor="price"
+                                      className="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#f4e1ff] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                    >
+                                      Price
+                                    </label>
+                                  </div>
+
+                                  {/* VipTicket CouponCode */}
+                                  <div className="relative z-0 w-full group">
+                                    <input
+                                      type="text"
+                                      id="vipTicketCouponCode"
+                                      name="vipTicketCouponCode"
+                                      value={event.vipTicketCouponCode}
+                                      onChange={handleChange}
+                                      className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-white appearance-none focus:outline-none focus:ring-0 focus:border-white peer"
+                                      placeholder=" "
+                                    />
+                                    <label
+                                      htmlFor="vipTicketCouponCode"
+                                      className="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#f4e1ff] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                    >
+                                      VipTicket CouponCode
+                                    </label>
+                                  </div>
+
+                                  {/* Vip Ticket Name */}
+                                  <div className="relative z-0 w-full group">
+                                    <input
+                                      type="text"
+                                      id="vipTicketName"
+                                      name="vipTicketName"
+                                      value={event.vipTicketName}
+                                      onChange={handleChange}
+                                      className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-white appearance-none focus:outline-none focus:ring-0 focus:border-white peer"
+                                      placeholder=" "
+                                    />
+                                    <label
+                                      htmlFor="vipTicketName"
+                                      className="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#f4e1ff] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                    >
+                                      Vip Ticket Name
+                                    </label>
+                                  </div>
+
+                                  {/* Vip Ticket Number Of Tickets */}
+                                  <div className="relative z-0 w-full group">
+                                    <input
+                                      type="text"
+                                      id="vipTicketNumberOfTickets"
+                                      name="vipTicketNumberOfTickets"
+                                      value={event.vipTicketNumberOfTickets}
+                                      onChange={handleChange}
+                                      className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-white appearance-none focus:outline-none focus:ring-0 focus:border-white peer"
+                                      placeholder=" "
+                                    />
+                                    <label
+                                      htmlFor="vipTicketNumberOfTickets"
+                                      className="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#f4e1ff] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                    >
+                                      Vip Ticket Number
+                                    </label>
+                                  </div>
+
+                                  {/* Vip Ticket Price */}
+                                  <div className="relative z-0 w-full group">
+                                    <input
+                                      type="text"
+                                      id="vipTicketPrice"
+                                      name="vipTicketPrice"
+                                      value={event.vipTicketPrice}
+                                      onChange={handleChange}
+                                      className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-white appearance-none focus:outline-none focus:ring-0 focus:border-white peer"
+                                      placeholder=" "
+                                    />
+                                    <label
+                                      htmlFor="vipTicketPrice"
+                                      className="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#f4e1ff] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                    >
+                                      Vip Ticket Price
+                                    </label>
+                                  </div>
+
+                                  {/* Location */}
+                                  <div className="relative z-0 w-full group">
+                                    <input
+                                      type="text"
+                                      id="location"
+                                      name="location"
+                                      value={event.location}
+                                      onChange={handleChange}
+                                      className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-white appearance-none focus:outline-none focus:ring-0 focus:border-white peer"
+                                      placeholder=" "
+                                    />
+                                    <label
+                                      htmlFor="location"
+                                      className="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#f4e1ff] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                    >
+                                      Location
+                                    </label>
+                                  </div>
+
+                                  {/* Image */}
+                                  <div className="relative z-0 w-full group">
+                                    <input
+                                      type="text"
+                                      id="image"
+                                      name="image"
+                                      value={event.image}
+                                      onChange={handleChange}
+                                      className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-white appearance-none focus:outline-none focus:ring-0 focus:border-white peer"
+                                      placeholder=" "
+                                    />
+                                    <label
+                                      htmlFor="image"
+                                      className="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#f4e1ff] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                    >
+                                      Image
+                                    </label>
+                                  </div>
+
+                                  {/* باقي الحقول... */}
+
+                                  {/* Submit Button */}
+                                  <button
+                                    onClick={EditEvent}
+                                    className="col-span-2 w-full bg-[#c783ff] text-white p-2 rounded-md hover:bg-[#d48cf6] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                                  >
+                                    Edit
+                                  </button>
+                                </form>
+                                <button
+                                  onClick={closeModal}
+                                  className="absolute top-0 right-0 mt-2 mr-2 text-white"
+                                >
+                                  X
+                                </button>
+                              </div>
+                            </div>
+                          )}
                           {movie.delete ? (
                             <button
                               onClick={() => ReturnEvent(movie.id)}
@@ -635,7 +1013,7 @@ function Events() {
                             <button
                               onClick={() => DeleteEvent(movie.id)}
                               type="button"
-                              className="bg-[#c53131] text-white px-4 py-2 rounded hover:bg-[#ff3131] transition duration-300 focus:outline-none focus:ring-2 focus:ring-opacity-50"
+                              className=" bg-[#c53131] text-white px-4 py-2 rounded hover:bg-[#ff3131] transition duration-300 focus:outline-none focus:ring-2 focus:ring-opacity-50"
                             >
                               Delete
                             </button>
@@ -649,7 +1027,6 @@ function Events() {
             </div>
           )}
         </div>
-
         <Footer />
       </div>
     </>
