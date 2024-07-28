@@ -694,7 +694,7 @@ function Events() {
                                   className="grid grid-cols-1 gap-6 sm:grid-cols-2"
                                 >
                                   <h1 className="col-span-2 text-center text-[30px] font-bold text-[#ffffff] mb-6">
-                                    Add Events
+                                    Edit Event
                                   </h1>
 
                                   {/* Title */}
